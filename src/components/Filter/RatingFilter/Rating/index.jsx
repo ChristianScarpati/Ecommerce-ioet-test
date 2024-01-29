@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import './Rating.css'
 
 function Rating({ stars }) {
+
     const fillStars = () => {
         const etiquetas = [];
         const starSelected = [...Array(stars)].map((_, index) => (
