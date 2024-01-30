@@ -20,13 +20,20 @@
     display: inline-block;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
-    }
+}
 
-    @keyframes rotation {
+@keyframes rotation {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
-    } 
+}
+
+@media screen and (min-width: 768px) and (max-width: 1250px) {
+    .ResultContainer .CardResultsContainer {
+        grid-template-columns: auto auto auto; 
+    }
+}
