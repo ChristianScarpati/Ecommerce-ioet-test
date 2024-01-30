@@ -1,7 +1,32 @@
 .DetailsCardContainer {
-    background: linear-gradient(90deg, rgba(165,13,138,1) 0%, rgba(254,54,99,1) 100%);
+    background: linear-gradient(90deg, rgba(165, 13, 138, 1) 0%, rgba(254, 54, 99, 1) 100%);
     color: white;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding: 23px;
+}
+
+.AddToCartContainer {
+    display: flex;
+    align-items: center;
+}
+
+.AddToCartButton {
+    font-size: 1.5rem;
+    width: 30px;
+    height: 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.AddToCartButton:hover {
+    background-color: #0056b3;
+}
+
+.AddToCartButton:last-child {
+    margin-right: 0;
 }

@@ -32,9 +32,18 @@ function Modal() {
                     </div>
                     <Rating stars={productRate || 5} />
                     <h6>{descriptionProduct}</h6>
+
+                    <div className="AddToCartContainer">
+                        Add to cart &nbsp;&nbsp;&nbsp;
+                        <button className="AddToCartButton">+</button>
+                        <button className="AddToCartButton">-</button>
+                        &nbsp;&nbsp; quantity: 2
+                    </div>
                 </div>
+
+
             </div>
-        </div>
+        </div >
     )
 }
 

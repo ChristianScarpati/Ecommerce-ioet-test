@@ -8,6 +8,15 @@ function Detail({ title, price, productRate }) {
             <h3>{title}</h3>
             <Rating stars={productRate} />
             <h3>${price}</h3>
+            <br />
+            <div className="AddToCartContainer">
+                <button className="AddToCartButton"
+                    onClick={(e) => e.stopPropagation()}
+                >+</button>
+                <button className="AddToCartButton"
+                    onClick={(e) => e.stopPropagation()}
+                >-</button>
+            </div>
         </div>
     )
 }
