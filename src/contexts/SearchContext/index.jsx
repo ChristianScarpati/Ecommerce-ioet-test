@@ -1,5 +1,6 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useCallback } from "react";
 import { sortProductsFilter } from "../../components/utils/index";
+import { getDataProductsList } from "../../components/api/index";
 import PropTypes from "prop-types";
 
 
@@ -13,22 +14,21 @@ function SearchProvider({ children }) {
   const [imageProduct, setImageProduct] = useState("");
   const [titleProduct, setTitleProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState("");
-  const [descriptionProduct, setDescriptionProduct] = useState("");
-  const [productRate, setProductRate] = useState(0)
   const [sortFilterProducts, setSortFilterProducts] = useState()
+  const [descriptionProduct, setDescriptionProduct] = useState("");
+  
+  const [productRate, setProductRate] = useState(0)
 
-  const getData = async () => {
-    const response = await fetch("https://fakestoreapi.com/products");
-    const data = await response.json();
+  const [categoryInitialProducts, setCategoryInitialProducts] = useState([])
+  const [categoryFilters, setCategoryFilters] = useState([])
 
-    return data
-  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productList = await getData();
+        const productList = await getDataProductsList();
         setProducts(productList);
+        setCategoryInitialProducts(productList);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -36,7 +36,6 @@ function SearchProvider({ children }) {
     };
     fetchData();
   }, []);
-
 
   useEffect(() => {
     const sortProductsByPrice = sortProductsFilter(products, sortFilterProducts)
@@ -46,17 +45,30 @@ function SearchProvider({ children }) {
   }, [sortFilterProducts])
 
 
+  const handleFilterCategory = useCallback(() => {
+    const filterProductCategory = categoryInitialProducts.filter((categoryProduct) => {
 
+      const checkProductCategory = !categoryFilters.length ||
+        categoryFilters.includes(categoryProduct.category);
+
+      return checkProductCategory
+
+    })
+    setProducts(filterProductCategory)
+
+  }, [categoryFilters, categoryInitialProducts])
 
   const searchedProducts = products.filter((product) => {
     const productName = product.title.toLowerCase();
     const searchText = searchValue.toLowerCase();
-    return productName.includes(searchText);
+    const includeProductName = productName.includes(searchText)
+    return includeProductName
   });
 
   return (
     <SearchContext.Provider
       value={{
+        products,
         searchValue,
         setSearchValue,
         searchedProducts,
@@ -75,6 +87,13 @@ function SearchProvider({ children }) {
         setProductRate,
         sortFilterProducts,
         setSortFilterProducts,
+
+        // Category
+        categoryFilters,
+        setCategoryFilters,
+        categoryInitialProducts,
+        handleFilterCategory,
+
       }}
     >
       {children}
