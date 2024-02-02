@@ -22,3 +22,12 @@ export const sortProductsFilter = (products, sortFilter = NAME) => {
 
     return sortedProducts;
 }
+
+export const fetchData = async (url) => {
+    try {
+        const response = await fetch(url);
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+};
