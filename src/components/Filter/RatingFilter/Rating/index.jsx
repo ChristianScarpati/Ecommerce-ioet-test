@@ -6,22 +6,21 @@ import './Rating.css'
 function Rating({ stars }) {
 
     const fillStars = () => {
-        const etiquetas = [];
+        const labels = [];
         const starSelected = [...Array(stars)].map((_, index) => (
             <AiFillStar className='StarFilled' key={index} />
         ))
         const starNotSelected = [...Array(5 - stars)].map((_, index) => (
             <AiOutlineStar className='StarNotFilled' key={index} />
         ))
-        etiquetas.push(starSelected)
-        etiquetas.push(starNotSelected)
-        return etiquetas
+        labels.push(starSelected)
+        labels.push(starNotSelected)
+        return labels
     }
 
     return (
         <div className='RatingContainer'>
             {fillStars()}
-            <h3>& up</h3>
         </div>
     )
 }

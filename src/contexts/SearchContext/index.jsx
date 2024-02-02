@@ -16,11 +16,13 @@ function SearchProvider({ children }) {
   const [priceProduct, setPriceProduct] = useState("");
   const [sortFilterProducts, setSortFilterProducts] = useState()
   const [descriptionProduct, setDescriptionProduct] = useState("");
-  
+
   const [productRate, setProductRate] = useState(0)
 
   const [categoryInitialProducts, setCategoryInitialProducts] = useState([])
   const [categoryFilters, setCategoryFilters] = useState([])
+
+  const [rateOptionProduct, setRateOptionProduct] = useState(0);
 
 
   useEffect(() => {
@@ -58,6 +60,17 @@ function SearchProvider({ children }) {
 
   }, [categoryFilters, categoryInitialProducts])
 
+  const handleFilterRate = useCallback(() => {
+    const filterProductRate = categoryInitialProducts.filter((product) => {
+      const roundProductRate = Math.round(product.rating.rate);
+      const checkProductRate = !rateOptionProduct || roundProductRate === rateOptionProduct
+
+      return checkProductRate
+    })
+
+    setProducts(filterProductRate)
+  }, [categoryInitialProducts, rateOptionProduct])
+
   const searchedProducts = products.filter((product) => {
     const productName = product.title.toLowerCase();
     const searchText = searchValue.toLowerCase();
@@ -93,7 +106,11 @@ function SearchProvider({ children }) {
         setCategoryFilters,
         categoryInitialProducts,
         handleFilterCategory,
-
+        
+        // Rate Product
+        rateOptionProduct,
+        setRateOptionProduct,
+        handleFilterRate,
       }}
     >
       {children}
