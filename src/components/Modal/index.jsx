@@ -3,7 +3,6 @@ import './Modal.css'
 import { Rating } from "../Filter/RatingFilter/Rating"
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { SearchContext } from '../../contexts/SearchContext';
-
 function Modal() {
     const {
         setIsOpen,
@@ -12,9 +11,27 @@ function Modal() {
         priceProduct,
         descriptionProduct,
         productRate,
+        cartState,
+        cartDispatch,
+        productId
     } = useContext(SearchContext);
 
     const setCloseModal = () => {
+        setIsOpen(false)
+    }
+
+    const handleAddProduct = () => {
+        cartDispatch({
+            type: 'ADD_ITEM_TO_CART',
+            payload: {
+                id: productId,
+                image: imageProduct,
+                title: titleProduct,
+                price: priceProduct,
+                description: descriptionProduct,
+                productRate: productRate
+            }
+        })
         setIsOpen(false)
     }
 
@@ -33,11 +50,29 @@ function Modal() {
                     <Rating stars={productRate || 5} />
                     <h6>{descriptionProduct}</h6>
 
-                    <div className="AddToCartContainer">
-                        Add to cart &nbsp;&nbsp;&nbsp;
-                        <button className="AddToCartButton">+</button>
-                        <button className="AddToCartButton">-</button>
-                        &nbsp;&nbsp; quantity: 2
+                    <div className="CartQuantityControlsModal">
+                        <div>
+                            <button
+                                className={`DecreaseQuantityButtonModal ${cartState.length === 0 ? 'DecreaseQuantityButtonModalDisabled' : ''}`}
+                                disabled={cartState.length === 0}
+                            >-</button>
+                            {
+                                cartState.productAmount > 0 ?
+                                    <span>{cartState.productAmount}</span> :
+                                    <span>0</span>
+                            } &nbsp;
+                            <button className="IncreaseQuantityButtonModal"
+                            >+</button>
+                        </div>
+                        <div>
+                            <button
+                                className='AddToCartMainButton'
+                                onClick={handleAddProduct}
+                            >
+                                add
+                            </button>
+                        </div>
+
                     </div>
                 </div>
 

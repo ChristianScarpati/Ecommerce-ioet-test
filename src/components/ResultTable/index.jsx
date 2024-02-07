@@ -11,16 +11,16 @@ function ResultTable() {
         isOpen,
     } = useContext(SearchContext);
 
-
     if (isLoading) return <span className="loader"></span>
 
     return (
-        <div className='ResultContainer'>
+        <section className='ResultContainer'>
             <h2>Results:</h2>
             <div className='CardResultsContainer'>
                 {searchedProducts.map((product, index) => {
                     return <Card
                         key={index}
+                        productId={`product.id-${index}`}
                         image={product.image}
                         title={product.title}
                         price={product.price}
@@ -31,7 +31,7 @@ function ResultTable() {
                 }
             </div>
             {isOpen && <Modal />}
-        </div>
+        </section>
     )
 }
 

@@ -1,7 +1,7 @@
 .RatingContainer {
     display: flex;
     align-items: center;
-    margin: 10px 0px 5px 0px;;
+    margin: 10px 0px 5px 0px;
 }
 
 .RatingContainer .StarFilled {
@@ -10,4 +10,8 @@
 
 .RatingContainer h3 {
     margin-left: 5px;
+}
+
+.StarNotFilled {
+    color: black;
 }
