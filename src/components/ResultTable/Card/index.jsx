@@ -4,14 +4,15 @@ import { SearchContext } from '../../../contexts/SearchContext';
 import PropTypes from "prop-types";
 import './Card.css'
 
-function Card({ image, title, price, description, productRate }) {
+function Card({ image, title, price, description, productRate, productId }) {
     const {
         setIsOpen,
         setImageProduct,
         setTitleProduct,
         setPriceProduct,
         setDescriptionProduct,
-        setProductRate
+        setProductRate,
+        setProductId
     } = useContext(SearchContext);
 
     const openModal = () => {
@@ -21,6 +22,7 @@ function Card({ image, title, price, description, productRate }) {
         setPriceProduct(price)
         setDescriptionProduct(description)
         setProductRate(productRate)
+        setProductId(productId)
     }
 
     return (
@@ -44,5 +46,6 @@ Card.propTypes = {
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
-    productRate: PropTypes.number.isRequired
+    productRate: PropTypes.number.isRequired,
+    productId: PropTypes.string.isRequired
 }

@@ -1,8 +1,8 @@
-import { useState, useEffect, createContext, useCallback } from "react";
+import { useState, useEffect, createContext, useCallback, useReducer } from "react";
 import { sortProductsFilter } from "../../components/utils/index";
 import { getDataProductsList } from "../../components/api/index";
+import { cartReducer, cartInitialState } from "../../reducers/cart/index";
 import PropTypes from "prop-types";
-
 
 const SearchContext = createContext();
 
@@ -16,14 +16,13 @@ function SearchProvider({ children }) {
   const [priceProduct, setPriceProduct] = useState("");
   const [sortFilterProducts, setSortFilterProducts] = useState()
   const [descriptionProduct, setDescriptionProduct] = useState("");
-
+  const [productId, setProductId] = useState(0)
   const [productRate, setProductRate] = useState(0)
-
   const [categoryInitialProducts, setCategoryInitialProducts] = useState([])
   const [categoryFilters, setCategoryFilters] = useState([])
-
   const [rateOptionProduct, setRateOptionProduct] = useState(0);
 
+  const [cartState, cartDispatch] = useReducer(cartReducer, cartInitialState)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,17 +99,22 @@ function SearchProvider({ children }) {
         setProductRate,
         sortFilterProducts,
         setSortFilterProducts,
+        productId,
+        setProductId,
 
         // Category
         categoryFilters,
         setCategoryFilters,
         categoryInitialProducts,
         handleFilterCategory,
-        
         // Rate Product
         rateOptionProduct,
         setRateOptionProduct,
         handleFilterRate,
+        
+        // Cart
+        cartState,
+        cartDispatch,        
       }}
     >
       {children}

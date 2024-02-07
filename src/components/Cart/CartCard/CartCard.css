@@ -1,0 +1,49 @@
+
+.CartCard {
+    display: grid;
+    justify-content: center;
+    padding: 1rem;
+    grid-template-columns: 1fr ;
+    border-bottom: 1px solid #8B8B8B;
+}
+
+.CartCard>span {
+    display: flex;
+    justify-content: center;
+}
+
+.deleteIcon {
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    height: 22px;
+    width: 22px;
+    color: red;
+}
+
+/* Buttons */
+
+.CartQuantityControls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.CartQuantityControls span {
+    margin-left: 5px;
+}
+
+.CartQuantityControls .DecreaseQuantityButton,
+.CartQuantityControls .IncreaseQuantityButton {
+    width: 25px;
+    height: 25px;
+    background-color: transparent;
+    color: gray;
+    border: 1px solid gray;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.CartQuantityControls .DecreaseQuantityButtonDisabled {
+    background-color: gray;
+}

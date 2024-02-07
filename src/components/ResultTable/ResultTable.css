@@ -4,8 +4,8 @@
 
 .ResultContainer .CardResultsContainer {
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    gap: 5%;
+    grid-template-columns: auto auto auto;
+    gap: 1% 5%;
     align-items: center;
     justify-content: center;
     height: 100%;
@@ -32,8 +32,14 @@
     }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1250px) {
+@media screen and (min-width: 768px) and (max-width: 1300px) {
     .ResultContainer .CardResultsContainer {
-        grid-template-columns: auto auto auto; 
+        grid-template-columns: auto auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .ResultContainer .CardResultsContainer {
+        grid-template-columns: auto auto;
     }
 }
