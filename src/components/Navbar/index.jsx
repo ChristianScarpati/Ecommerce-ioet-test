@@ -5,11 +5,11 @@ import './Navbar.css'
 
 function Navbar() {
     return (
-        <div className='NavbarContainer'>
+        <nav className='NavbarContainer'>
             <Logo />
             <Search />
             <CartLogo />
-        </div>
+        </nav>
     )
 }
 

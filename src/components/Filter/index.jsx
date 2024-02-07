@@ -4,7 +4,7 @@ import './Filter.css'
 
 function Filter () {
     return (
-        <div className='FilterContainer'>
+        <aside className='FilterContainer'>
             <TypeFilter
                 name='Category'
                 options={[
@@ -15,7 +15,7 @@ function Filter () {
                 ]}
             />
             <RatingFilter />
-        </div>
+        </aside>
     )
 }
 
