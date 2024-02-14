@@ -3,43 +3,28 @@ import './Modal.css'
 import { Rating } from "../Filter/RatingFilter/Rating"
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { SearchContext } from '../../contexts/SearchContext';
+
 function Modal() {
     const {
         setIsOpen,
+        cartState,
         imageProduct,
         titleProduct,
         priceProduct,
         descriptionProduct,
         productRate,
-        cartState,
-        cartDispatch,
-        productId
+        handlers
     } = useContext(SearchContext);
 
-    const setCloseModal = () => {
-        setIsOpen(false)
-    }
+    const { handleAddProduct, handleAddProductCounter, handleRemoveFromCart } = handlers;
 
-    const handleAddProduct = () => {
-        cartDispatch({
-            type: 'ADD_ITEM_TO_CART',
-            payload: {
-                id: productId,
-                image: imageProduct,
-                title: titleProduct,
-                price: priceProduct,
-                description: descriptionProduct,
-                productRate: productRate
-            }
-        })
-        setIsOpen(false)
-    }
+    const productLengthAlreadyExistInCart = cartState.cart.filter(product => product.title === titleProduct).length;
 
     return (
         <div className='ModalContainer'>
             <div className='ContentModalContainer'>
                 <div className='ProductImageContainer'>
-                    <AiOutlineCloseCircle className='closeModal' onClick={setCloseModal} />
+                    <AiOutlineCloseCircle className='closeModal' onClick={() => setIsOpen(false)} />
                     <img src={imageProduct} />
                 </div>
                 <div className="DetailsModalContainer">
@@ -55,14 +40,16 @@ function Modal() {
                             <button
                                 className={`DecreaseQuantityButtonModal ${cartState.length === 0 ? 'DecreaseQuantityButtonModalDisabled' : ''}`}
                                 disabled={cartState.length === 0}
+                                onClick={handleRemoveFromCart}
                             >-</button>
                             {
-                                cartState.productAmount > 0 ?
-                                    <span>{cartState.productAmount}</span> :
-                                    <span>0</span>
+                                <span>{productLengthAlreadyExistInCart}</span>
                             } &nbsp;
-                            <button className="IncreaseQuantityButtonModal"
-                            >+</button>
+                            <button
+                                className="IncreaseQuantityButtonModal"
+                                onClick={handleAddProductCounter}>
+                                +
+                            </button>
                         </div>
                         <div>
                             <button

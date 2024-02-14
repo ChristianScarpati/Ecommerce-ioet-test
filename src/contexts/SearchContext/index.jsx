@@ -77,6 +77,27 @@ function SearchProvider({ children }) {
     return includeProductName
   });
 
+  const handleDispatch = ((type) => {
+    cartDispatch({
+      type,
+      payload: {
+        id: productId,
+        image: imageProduct,
+        title: titleProduct,
+        price: priceProduct,
+        description: descriptionProduct,
+        productRate: productRate,
+      }
+    })
+
+  })
+
+  const handlers = {
+    handleAddProductCounter: () => handleDispatch('ADD_PRODUCT_COUNTER_TO_CART'),
+    handleRemoveFromCart: () => handleDispatch('REMOVE_FROM_CART'),
+    handleAddProduct: () => handleDispatch('ADD_ITEM_TO_CART')
+  };
+
   return (
     <SearchContext.Provider
       value={{
@@ -111,10 +132,11 @@ function SearchProvider({ children }) {
         rateOptionProduct,
         setRateOptionProduct,
         handleFilterRate,
-        
+
         // Cart
         cartState,
-        cartDispatch,        
+        cartDispatch,
+        handlers
       }}
     >
       {children}

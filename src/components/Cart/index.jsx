@@ -1,16 +1,16 @@
 import "./Cart.css";
-import { useContext, Component } from 'react';
+import { useContext } from 'react';
 import { SearchContext } from '../../contexts/SearchContext';
 import CartCard from "./CartCard";
+import { calculateTotal, consolidateCart } from "../utils/cart";
 
 export default function Cart() {
 
-    const { cartState, cartDispatch, isLoading } = useContext(SearchContext);
+    const { cartState, isLoading } = useContext(SearchContext);
 
     if (isLoading) return <span className="loader"></span>
 
-    const cartIsNotEmpty = cartState.cart.length === 0 ? <p>Your cart is empty</p> : <Component />
-
+    const cartIsEmpty = cartState.cart.length === 0;
     return (
         <div
             className={`CartContainer ${cartState.toggleSidebarCart && 'open'}`}
@@ -19,19 +19,19 @@ export default function Cart() {
             <div className='CartHeader'>
                 <h2> Subtotal: </h2>
                 <span>
-                    ${cartState.cart.length * 100}
+                    $ {calculateTotal(cartState.cart)}
                 </span>
                 <button className='ButtonContinueToPurchase'> Continue </button>
 
             </div>
             <div className='CartResultsContainer'>
+                {cartIsEmpty && <p>Your cart is empty</p>}
                 {
-                    cartIsNotEmpty && cartState.cart.map((product, index) => {
+                    cartState.cart.length > 0 && consolidateCart(cartState.cart).map((product) => {
                         return (
                             <CartCard
-                                key={index}
+                                key={product.id}
                                 product={product}
-                                cartDispatch={cartDispatch}
                             />
                         )
                     })
