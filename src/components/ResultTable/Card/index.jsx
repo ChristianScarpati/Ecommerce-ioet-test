@@ -3,8 +3,9 @@ import { Detail } from './Detail'
 import { SearchContext } from '../../../contexts/SearchContext';
 import PropTypes from "prop-types";
 import './Card.css'
+import { nanoid } from 'nanoid';
 
-function Card({ image, title, price, description, productRate, productId }) {
+function Card({ image, title, price, description, productRate }) {
     const {
         setIsOpen,
         setImageProduct,
@@ -22,7 +23,7 @@ function Card({ image, title, price, description, productRate, productId }) {
         setPriceProduct(price)
         setDescriptionProduct(description)
         setProductRate(productRate)
-        setProductId(productId)
+        setProductId(nanoid())
     }
 
     return (
@@ -47,5 +48,4 @@ Card.propTypes = {
     price: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     productRate: PropTypes.number.isRequired,
-    productId: PropTypes.string.isRequired
 }

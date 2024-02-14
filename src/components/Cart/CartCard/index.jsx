@@ -1,11 +1,25 @@
 import { TiDeleteOutline } from "react-icons/ti";
 import PropTypes from "prop-types";
 import "./CartCard.css"
+import { useContext } from "react";
+import { SearchContext } from "../../../contexts/SearchContext";
 
 
 export default function CartCard({ product }) {
+    const { cartDispatch, cartState, handlers } = useContext(SearchContext);
 
-    const productAmount = product.productAmount > 0 ? <span>{product.productAmount}</span> : <span>0</span>
+    const { handleRemoveFromCart, handleAddProductCounter } = handlers;
+
+    const checkQuantityAmountProductSelected = (product) => {
+        return cartState.cart.reduce((count, cartProduct) => {
+            if (cartProduct.id === product.id) {
+                return count + 1
+            }
+            return count;
+        }, 0);
+    };
+
+    const truncatedTitle = product.title.length > 50 ? `${product.title.substring(0, 50)}...` : product.title;
 
     return (
         <div className='CartCard'>
@@ -14,6 +28,10 @@ export default function CartCard({ product }) {
                     display: 'flex',
                     justifyContent: 'center',
                 }}
+                onClick={() => cartDispatch({
+                    type: 'REMOVE_FROM_CART',
+                    payload: product.id
+                })}
             >
                 <img src={product.image} alt={product.title} width={80} height={80} style={{ paddingBottom: '8px' }} />
                 <TiDeleteOutline
@@ -21,7 +39,8 @@ export default function CartCard({ product }) {
                 />
             </div>
 
-            <span>$ 1000</span>
+            <span>{truncatedTitle}</span>
+            <span style={{ fontWeight: 'bold' }}> $ {product.price}  </span>
 
             <div className="CartQuantityControls">
                 <div
@@ -30,16 +49,17 @@ export default function CartCard({ product }) {
                     <button
                         className={`DecreaseQuantityButton ${product.length === 0 ? 'DecreaseQuantityButtonDisabled' : ''}`}
                         disabled={product.length === 0}
+                        onClick={() => handleRemoveFromCart(product)}
                     >
                         -
                     </button>
-                    {
-                        productAmount
-                    } &nbsp;
-                    <button className="IncreaseQuantityButton"> + </button>
+
+                    <span style={{ margin: "0px 15px" }} >{checkQuantityAmountProductSelected(product)} </span>
+                    <button
+                        className="IncreaseQuantityButton"
+                        onClick={() => handleAddProductCounter(product.id)}
+                    > + </button>
                 </div>
-
-
             </div>
         </div>
 
@@ -48,5 +68,4 @@ export default function CartCard({ product }) {
 
 CartCard.propTypes = {
     product: PropTypes.object.isRequired,
-    index: PropTypes.number.isRequired
 }

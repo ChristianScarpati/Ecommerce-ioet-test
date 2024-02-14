@@ -20,7 +20,6 @@ function ResultTable() {
                 {searchedProducts.map((product, index) => {
                     return <Card
                         key={index}
-                        productId={`product.id-${index}`}
                         image={product.image}
                         title={product.title}
                         price={product.price}
